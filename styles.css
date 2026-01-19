@@ -1,3 +1,11 @@
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  display: block;
+}
+
 body {
   margin: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
