@@ -1,67 +1,1705 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Daniel Löffler · KI-Management</title>
-  <link rel="stylesheet" href="styles.css">
-<meta name="apple-mobile-web-app-capable" content="no">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daniel Löffler - KI-Manager Portfolio</title>
+    <meta name="description" content="KI-Management Portfolio von Daniel Löffler - Strategie, Governance & Business Cases für erfolgreiche KI-Implementierung">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00d4ff;
+            --secondary: #ff006e;
+            --accent: #8338ec;
+            --dark: #0a0e27;
+            --dark-blue: #1a1f3a;
+            --navy: #0f1729;
+            --cyan: #00f5ff;
+            --pink: #ff2d95;
+            --purple: #a855f7;
+            --white: #ffffff;
+            --light: #e8eef7;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--white);
+            background: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.9);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(10, 14, 39, 0.95);
+            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--cyan) 0%, var(--pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
+            font-size: 1rem;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--cyan);
+            transition: width 0.3s;
+            box-shadow: 0 0 10px var(--cyan);
+        }
+
+        .nav-links a:hover {
+            color: var(--cyan);
+            text-shadow: 0 0 10px var(--cyan);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        @media (max-width: 968px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                width: 250px;
+                height: calc(100vh - 70px);
+                background: rgba(10, 14, 39, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                transition: right 0.4s ease;
+                border-left: 1px solid rgba(0, 212, 255, 0.2);
+                box-shadow: -5px 0 20px rgba(0,0,0,0.3);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.2rem;
+                padding: 0.5rem 0;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1729 100%);
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.6;
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 45, 149, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, rgba(131, 56, 236, 0.1) 0%, transparent 50%);
+        }
+
+        #particles-canvas,
+        #network-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #particles-canvas {
+            z-index: 2;
+        }
+
+        #network-canvas {
+            z-index: 3;
+        }
+
+        .brain-visual {
+            position: absolute;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 400px;
+            height: 400px;
+            z-index: 4;
+            opacity: 0.3;
+        }
+
+        .data-overlay {
+            position: absolute;
+            z-index: 5;
+            font-family: 'Courier New', monospace;
+            color: var(--cyan);
+            font-size: 0.9rem;
+            opacity: 0.5;
+            animation: dataFlow 3s ease-in-out infinite;
+        }
+
+        @keyframes dataFlow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+
+        .data-1 { top: 15%; left: 10%; }
+        .data-2 { top: 25%; right: 15%; }
+        .data-3 { bottom: 20%; left: 15%; }
+        .data-4 { bottom: 30%; right: 20%; }
+
+        .hero-content {
+            max-width: 1200px;
+            text-align: center;
+            color: var(--white);
+            z-index: 10;
+            position: relative;
+            padding: 2rem;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.6rem 1.8rem;
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid var(--cyan);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            animation: glow 2s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(0, 212, 255, 0.6); }
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 6vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #ffffff 0%, var(--cyan) 50%, var(--pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease;
+            text-shadow: 0 0 80px rgba(0, 212, 255, 0.5);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease 0.2s backwards;
+            color: var(--cyan);
+            font-weight: 600;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 1.5vw, 1.2rem);
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 1s ease 0.4s backwards;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.8;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.6s backwards;
+        }
+
+        .btn {
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.4s;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            font-size: 1.1rem;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--cyan) 0%, var(--pink) 100%);
+            color: var(--dark);
+            border: 2px solid transparent;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 50px rgba(0, 212, 255, 0.8);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--cyan);
+            color: var(--cyan);
+            background: rgba(0, 212, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-outline:hover {
+            background: var(--cyan);
+            color: var(--dark);
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 6rem 2rem;
+            position: relative;
+        }
+
+        section:nth-child(even) {
+            background: linear-gradient(180deg, var(--navy) 0%, var(--dark) 100%);
+        }
+
+        section:nth-child(odd) {
+            background: var(--dark);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--cyan), var(--pink));
+            border-radius: 2px;
+            box-shadow: 0 0 20px var(--cyan);
+        }
+
+        .section-title h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--white) 0%, var(--cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-title p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .about-visual {
+            position: relative;
+            height: 500px;
+        }
+
+        .neural-network {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+        }
+
+        .node-circle {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--cyan), var(--purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 30px var(--cyan);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        .node-circle svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 30px var(--cyan); }
+            50% { transform: scale(1.1); box-shadow: 0 0 50px var(--cyan); }
+        }
+
+        .node-1 { top: 0; left: 50%; transform: translateX(-50%); animation-delay: 0s; }
+        .node-2 { top: 30%; right: 0; animation-delay: 0.5s; }
+        .node-3 { bottom: 30%; right: 0; animation-delay: 1s; }
+        .node-4 { bottom: 0; left: 50%; transform: translateX(-50%); animation-delay: 1.5s; }
+        .node-5 { bottom: 30%; left: 0; animation-delay: 2s; }
+        .node-6 { top: 30%; left: 0; animation-delay: 2.5s; }
+
+        .center-node {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--pink), var(--purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 0 60px var(--pink);
+            z-index: 10;
+        }
+
+        .about-content h3 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--cyan);
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 212, 255, 0.05);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 20px;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .stat-card:hover::before {
+            left: 100%;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--cyan);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.3);
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--cyan), var(--pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            padding: 2rem 0;
+        }
+
+        .skill-card {
+            background: rgba(26, 31, 58, 0.6);
+            padding: 2.5rem;
+            border-radius: 25px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--cyan), var(--pink));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s;
+        }
+
+        .skill-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 60px rgba(0, 212, 255, 0.3);
+            border-color: var(--cyan);
+            background: rgba(26, 31, 58, 0.8);
+        }
+
+        .skill-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--cyan), var(--purple));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .skill-icon svg {
+            width: 45px;
+            height: 45px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .skill-card:hover .skill-icon {
+            transform: rotateY(360deg) scale(1.1);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.5);
+        }
+
+        .skill-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--cyan);
+        }
+
+        .skill-card p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.7;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+        }
+
+        .project-card {
+            background: rgba(26, 31, 58, 0.6);
+            border-radius: 25px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(255, 45, 149, 0.1));
+            opacity: 0;
+            transition: opacity 0.4s;
+            z-index: 1;
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-card:hover {
+            transform: translateY(-20px);
+            box-shadow: 0 30px 80px rgba(0, 212, 255, 0.4);
+            border-color: var(--cyan);
+        }
+
+        .project-image {
+            height: 280px;
+            background: linear-gradient(135deg, var(--cyan) 0%, var(--purple) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image svg {
+            width: 120px;
+            height: 120px;
+            position: relative;
+            z-index: 2;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+        }
+
+        .project-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 30% 50%, rgba(255,255,255,0.2) 0%, transparent 50%),
+                radial-gradient(circle at 70% 80%, rgba(255,255,255,0.15) 0%, transparent 50%);
+        }
+
+        .project-content {
+            padding: 2.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .project-tag {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            background: rgba(0, 212, 255, 0.2);
+            color: var(--cyan);
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            border: 1px solid var(--cyan);
+        }
+
+        .project-content h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+
+        .project-content p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .project-link {
+            color: var(--cyan);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .project-link::after {
+            content: '→';
+            transition: transform 0.3s;
+        }
+
+        .project-link:hover {
+            gap: 1rem;
+        }
+
+        .project-link:hover::after {
+            transform: translateX(5px);
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: start;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            padding: 2rem;
+            background: rgba(26, 31, 58, 0.6);
+            border-radius: 20px;
+            transition: all 0.4s;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-item:hover {
+            transform: translateX(15px);
+            border-color: var(--cyan);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.3);
+            background: rgba(26, 31, 58, 0.8);
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--cyan), var(--purple));
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 10px 25px rgba(0, 212, 255, 0.3);
+        }
+
+        .contact-item h4 {
+            font-size: 1.1rem;
+            color: var(--cyan);
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-item p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .contact-item a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-item:hover a {
+            color: var(--cyan);
+        }
+
+        .contact-form {
+            background: rgba(26, 31, 58, 0.6);
+            padding: 3rem;
+            border-radius: 25px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: var(--cyan);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1.2rem;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 15px;
+            background: rgba(10, 14, 39, 0.5);
+            font-family: inherit;
+            transition: all 0.3s;
+            font-size: 1rem;
+            color: var(--white);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--cyan);
+            background: rgba(10, 14, 39, 0.8);
+            box-shadow: 0 0 0 4px rgba(0, 212, 255, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 180px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--navy);
+            color: var(--white);
+            padding: 4rem 2rem;
+            position: relative;
+            border-top: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .social-link {
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid var(--cyan);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--cyan);
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: all 0.4s;
+        }
+
+        .social-link:hover {
+            background: var(--cyan);
+            color: var(--dark);
+            transform: translateY(-8px) rotate(5deg);
+            box-shadow: 0 15px 35px rgba(0, 212, 255, 0.4);
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .about-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .brain-visual {
+                display: none;
+            }
+
+            section {
+                padding: 4rem 1.5rem;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
-
 <body>
-<header class="nav">
-  <div class="brand">Daniel Löffler</div>
-  <nav>
-    <a href="index.html" class="active">Start</a>
-    <a href="about.html">Über mich</a>
-    <a href="#">Insights</a>
-    <a href="#">Arbeitsproben</a>
-    <a href="#kontakt">Kontakt</a>
-  </nav>
-</header>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">DL</div>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Menu">☰</button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#home">Start</a></li>
+                <li><a href="#about">Über mich</a></li>
+                <li><a href="#skills">Kompetenzen</a></li>
+                <li><a href="#projects">Portfolio</a></li>
+                <li><a href="#contact">Kontakt</a></li>
+            </ul>
+        </div>
+    </nav>
 
-<section class="hero">
-  <img src="images/hero-ai.jpg" alt="KI & Controlling Visualisierung">
-  <div class="hero-text">
-    <h1>KI-Management zwischen<br>Strategie, Governance & Business Case</h1>
-    <p>
-      KI entfaltet ihren Wert nicht durch Tools,
-      sondern durch steuerbare Entscheidungen,
-      wirtschaftliche Bewertung und klare Verantwortung.
-    </p>
-    <div class="cta">
-      <a href="about.html" class="btn primary">Über mich</a>
-      <a href="https://www.linkedin.com/in/daniel-loeffler-ffm/" target="_blank" class="btn">LinkedIn</a>
-    </div>
-  </div>
-</section>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <canvas id="particles-canvas"></canvas>
+        <canvas id="network-canvas"></canvas>
+        
+        <svg class="brain-visual" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="brainGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#ff2d95;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            <path d="M100,30 Q130,30 140,50 Q150,70 145,90 Q140,110 130,125 Q120,140 100,145 Q80,140 70,125 Q60,110 55,90 Q50,70 60,50 Q70,30 100,30 Z" 
+                  fill="none" stroke="url(#brainGrad)" stroke-width="2" opacity="0.6"/>
+            <circle cx="80" cy="60" r="3" fill="#00d4ff" opacity="0.8">
+                <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="120" cy="60" r="3" fill="#00d4ff" opacity="0.8">
+                <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="100" cy="80" r="3" fill="#ff2d95" opacity="0.8">
+                <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" begin="1s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="70" cy="100" r="3" fill="#00d4ff" opacity="0.8">
+                <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" begin="1.5s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="130" cy="100" r="3" fill="#ff2d95" opacity="0.8">
+                <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" begin="0.8s" repeatCount="indefinite"/>
+            </circle>
+        </svg>
+        
+        <div class="data-overlay data-1">KPI: 98.3%</div>
+        <div class="data-overlay data-2">ROI: +142%</div>
+        <div class="data-overlay data-3">Accuracy: 0.94</div>
+        <div class="data-overlay data-4">Efficiency: ↑ 35%</div>
+        
+        <div class="hero-content">
+            <div class="hero-badge">
+                <svg width="20" height="20" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: inline-block; vertical-align: middle; margin-right: 8px;">
+                    <path d="M50 10 L60 35 L87 35 L65 50 L75 75 L50 60 L25 75 L35 50 L13 35 L40 35 Z" fill="currentColor"/>
+                </svg>
+                Zertifizierter KI-Manager
+            </div>
+            <h1>Daniel Löffler</h1>
+            <p class="subtitle">KI-Management zwischen Strategie, Governance & Business Case</p>
+            <p>KI entfaltet ihren Wert nicht durch Tools, sondern durch steuerbare Entscheidungen, wirtschaftliche Bewertung und klare Verantwortung.</p>
+            <div class="cta-buttons">
+                <a href="#projects" class="btn btn-primary">Portfolio ansehen</a>
+                <a href="https://www.linkedin.com/in/daniel-loeffler-ffm/" target="_blank" class="btn btn-outline">LinkedIn Profil</a>
+            </div>
+        </div>
+    </section>
 
-<section class="content">
-  <h2>Wofür ich stehe</h2>
-  <div class="cards">
-    <div class="card">
-      <h3>KI-Strategie & Priorisierung</h3>
-      <p>Systematische Auswahl sinnvoller Use Cases mit Management-Fokus.</p>
-    </div>
-    <div class="card">
-      <h3>Wirtschaftlichkeit & Steuerung</h3>
-      <p>Business Cases, KPIs und Skalierung aus Controller-Perspektive.</p>
-    </div>
-    <div class="card">
-      <h3>Governance & Organisation</h3>
-      <p>Rollen, Leitplanken und Risiken für nachhaltige KI-Nutzung.</p>
-    </div>
-  </div>
-</section>
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Über mich</h2>
+                <p>Controller trifft KI-Management</p>
+            </div>
+            <div class="about-grid">
+                <div class="about-visual fade-in">
+                    <div class="neural-network">
+                        <div class="node-circle node-1">
+                            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <filter id="node-glow-cyan">
+                                        <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                                        <feMerge>
+                                            <feMergeNode in="coloredBlur"/>
+                                            <feMergeNode in="SourceGraphic"/>
+                                        </feMerge>
+                                    </filter>
+                                </defs>
+                                <circle cx="50" cy="50" r="30" stroke="#00d4ff" stroke-width="3" fill="none" filter="url(#node-glow-cyan)"/>
+                                <circle cx="50" cy="50" r="20" stroke="white" stroke-width="3" fill="none"/>
+                                <line x1="50" y1="20" x2="50" y2="30" stroke="#00d4ff" stroke-width="3" filter="url(#node-glow-cyan)"/>
+                                <line x1="50" y1="70" x2="50" y2="80" stroke="#00d4ff" stroke-width="3" filter="url(#node-glow-cyan)"/>
+                                <line x1="20" y1="50" x2="30" y2="50" stroke="#00d4ff" stroke-width="3" filter="url(#node-glow-cyan)"/>
+                                <line x1="70" y1="50" x2="80" y2="50" stroke="#00d4ff" stroke-width="3" filter="url(#node-glow-cyan)"/>
+                            </svg>
+                        </div>
+                        <div class="node-circle node-2">
+                            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <filter id="node-glow-pink">
+                                        <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                                        <feMerge>
+                                            <feMergeNode in="coloredBlur"/>
+                                            <feMergeNode in="SourceGraphic"/>
+                                        </feMerge>
+                                    </filter>
+                                </defs>
+                                <rect x="25" y="60" width="15" height="25" fill="#00d4ff" rx="2" opacity="0.8"/>
+                                <rect x="45" y="50" width="15" height="35" fill="#ff2d95" rx="2" opacity="0.8" filter="url(#node-glow-pink)"/>
+                                <rect x="65" y="40" width="15" height="45" fill="white" rx="2"/>
+                            </svg>
+                        </div>
+                        <div class="node-circle node-3">
+                            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <filter id="node-glow-gold">
+                                        <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                                        <feMerge>
+                                            <feMergeNode in="coloredBlur"/>
+                                            <feMergeNode in="SourceGraphic"/>
+                                        </feMerge>
+                                    </filter>
+                                </defs>
+                                <path d="M50 20 L65 45 L85 45 L68 58 L75 80 L50 65 L25 80 L32 58 L15 45 L35 45 Z" fill="#ffd700" filter="url(#node-glow-gold)"/>
+                            </svg>
+                        </div>
+                        <div class="node-circle node-4">
+                            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <filter id="node-glow-purple">
+                                        <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                                        <feMerge>
+                                            <feMergeNode in="coloredBlur"/>
+                                            <feMergeNode in="SourceGraphic"/>
+                                        </feMerge>
+                                    </filter>
+                                </defs>
+                                <path d="M30 50 L45 35 L55 35 L70 50 L70 60 L55 75 L45 75 L30 60 Z" fill="white"/>
+                                <circle cx="50" cy="50" r="12" fill="#a855f7" filter="url(#node-glow-purple)"/>
+                            </svg>
+                        </div>
+                        <div class="node-circle node-5">
+                            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M25 70 L40 45 L55 55 L70 30 L85 40" stroke="#ff2d95" stroke-width="5" fill="none" stroke-linecap="round" filter="url(#node-glow-pink)"/>
+                                <circle cx="25" cy="70" r="5" fill="white"/>
+                                <circle cx="40" cy="45" r="5" fill="white"/>
+                                <circle cx="55" cy="55" r="5" fill="#ff2d95" filter="url(#node-glow-pink)"/>
+                                <circle cx="70" cy="30" r="5" fill="white"/>
+                                <circle cx="85" cy="40" r="5" fill="white"/>
+                            </svg>
+                        </div>
+                        <div class="node-circle node-6">
+                            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="40" cy="35" r="12" fill="white"/>
+                                <circle cx="60" cy="35" r="12" fill="white"/>
+                                <circle cx="35" cy="35" r="5" fill="#00d4ff" filter="url(#node-glow-cyan)"/>
+                                <circle cx="60" cy="35" r="5" fill="#00d4ff" filter="url(#node-glow-cyan)"/>
+                                <path d="M40 50 L40 70 M60 50 L60 70 M40 70 L50 80 M60 70 L50 80" stroke="#ff2d95" stroke-width="3" filter="url(#node-glow-pink)"/>
+                                <circle cx="50" cy="80" r="5" fill="#ff2d95" filter="url(#node-glow-pink)"/>
+                            </svg>
+                        </div>
+                        <div class="center-node">DL</div>
+                    </div>
+                </div>
+                <div class="about-content fade-in">
+                    <h3>Vom Controller zum KI-Manager</h3>
+                    <p>Mit über 15 Jahren Erfahrung im operativen und strategischen Controlling bringe ich eine einzigartige Perspektive ins KI-Management: <strong>Datengetriebene Steuerung trifft auf KI-gestützte Innovation.</strong></p>
+                    <p>Bei der DB Regio AG habe ich als Leiter der Personalplanung und -steuerung gelernt, wie wichtig fundierte Datenanalysen und systematische Entscheidungsprozesse sind. Mit Expertise in IBM Cognos TM1, Power BI und SAP habe ich komplexe BI-Landschaften aufgebaut und Teams erfolgreich geführt.</p>
+                    <p>Jetzt nutze ich diese Expertise, um KI-Projekte nicht nur technologisch, sondern vor allem <strong>wirtschaftlich erfolgreich</strong> zu machen. Mein Fokus: <em>Wie schaffen wir messbaren Mehrwert durch KI?</em></p>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card fade-in">
+                            <span class="stat-number">15+</span>
+                            <span class="stat-label">Jahre Controlling-Erfahrung</span>
+                        </div>
+                        <div class="stat-card fade-in">
+                            <span class="stat-number">10+</span>
+                            <span class="stat-label">Jahre Führungserfahrung</span>
+                        </div>
+                        <div class="stat-card fade-in">
+                            <span class="stat-number">360</span>
+                            <span class="stat-label">Stunden KI-Training</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<footer id="kontakt">
-  <p>
-    © 2026 · Daniel Löffler · KI-Management im Unternehmen<br>
-    <a href="https://www.linkedin.com/in/daniel-loeffler-ffm/" target="_blank">
-      linkedin.com/in/daniel-loeffler-ffm
-    </a>
-  </p>
-</footer>
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Meine Kompetenzen</h2>
+                <p>Von Strategie bis Implementierung</p>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-card fade-in">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <filter id="glow-cyan">
+                                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                    <feMerge>
+                                        <feMergeNode in="coloredBlur"/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <circle cx="50" cy="50" r="35" stroke="#00d4ff" stroke-width="3" fill="none" filter="url(#glow-cyan)"/>
+                            <circle cx="50" cy="50" r="25" stroke="#00d4ff" stroke-width="3" fill="none" opacity="0.7"/>
+                            <circle cx="50" cy="50" r="15" stroke="white" stroke-width="3" fill="none"/>
+                            <circle cx="50" cy="50" r="5" fill="#00d4ff" filter="url(#glow-cyan)"/>
+                            <line x1="50" y1="15" x2="50" y2="25" stroke="white" stroke-width="3"/>
+                            <line x1="50" y1="75" x2="50" y2="85" stroke="white" stroke-width="3"/>
+                            <line x1="15" y1="50" x2="25" y2="50" stroke="white" stroke-width="3"/>
+                            <line x1="75" y1="50" x2="85" y2="50" stroke="white" stroke-width="3"/>
+                        </svg>
+                    </div>
+                    <h3>KI-Strategie & Use Cases</h3>
+                    <p>Systematische Identifikation und Priorisierung von KI-Anwendungsfällen mit klarem ROI-Fokus. Business-Case-Bewertung und strategische Roadmap-Entwicklung.</p>
+                </div>
+                <div class="skill-card fade-in">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <filter id="glow-pink">
+                                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                    <feMerge>
+                                        <feMergeNode in="coloredBlur"/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <path d="M20 70 L35 45 L50 55 L65 30 L80 40" stroke="#ff2d95" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow-pink)"/>
+                            <circle cx="20" cy="70" r="4" fill="white"/>
+                            <circle cx="35" cy="45" r="4" fill="white"/>
+                            <circle cx="50" cy="55" r="4" fill="white"/>
+                            <circle cx="65" cy="30" r="4" fill="#ff2d95" filter="url(#glow-pink)"/>
+                            <circle cx="80" cy="40" r="4" fill="white"/>
+                            <path d="M25 80 L25 85 M40 80 L40 85 M55 80 L55 85 M70 80 L70 85" stroke="white" stroke-width="2"/>
+                            <text x="50" y="25" fill="white" font-size="20" text-anchor="middle" font-weight="bold">€</text>
+                        </svg>
+                    </div>
+                    <h3>Wirtschaftlichkeit & Controlling</h3>
+                    <p>KPI-Design, Budget-Steuerung und Performance-Messung für KI-Projekte. 15+ Jahre Erfahrung in datengetriebener Unternehmenssteuerung.</p>
+                </div>
+                <div class="skill-card fade-in">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <filter id="glow-gold">
+                                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                    <feMerge>
+                                        <feMergeNode in="coloredBlur"/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <path d="M50 15 L65 40 L90 40 L70 55 L80 80 L50 65 L20 80 L30 55 L10 40 L35 40 Z" stroke="#ffd700" stroke-width="3" fill="none" filter="url(#glow-gold)"/>
+                            <circle cx="50" cy="50" r="12" stroke="white" stroke-width="3" fill="none"/>
+                            <path d="M50 38 L50 50 L58 58" stroke="#ffd700" stroke-width="3" stroke-linecap="round" filter="url(#glow-gold)"/>
+                        </svg>
+                    </div>
+                    <h3>Governance & Compliance</h3>
+                    <p>Aufbau von KI-Governance-Strukturen, DSGVO-konforme Prozesse und Risikomanagement für nachhaltige und verantwortungsvolle KI-Nutzung.</p>
+                </div>
+                <div class="skill-card fade-in">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <filter id="glow-purple">
+                                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                    <feMerge>
+                                        <feMergeNode in="coloredBlur"/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <rect x="15" y="60" width="12" height="25" fill="#00d4ff" rx="2" opacity="0.8"/>
+                            <rect x="32" y="50" width="12" height="35" fill="#ff2d95" rx="2" opacity="0.8"/>
+                            <rect x="49" y="40" width="12" height="45" fill="#a855f7" rx="2" filter="url(#glow-purple)"/>
+                            <rect x="66" y="30" width="12" height="55" fill="white" rx="2"/>
+                            <path d="M20 25 L35 20 L50 22 L65 18 L80 15" stroke="#00d4ff" stroke-width="3" stroke-dasharray="5,5" filter="url(#glow-cyan)"/>
+                        </svg>
+                    </div>
+                    <h3>Datenanalyse & BI</h3>
+                    <p>Expertise in IBM Cognos TM1, Power BI, Tableau und SAP. Aufbau intelligenter Dashboards und datengetriebener Entscheidungsgrundlagen.</p>
+                </div>
+                <div class="skill-card fade-in">
+                    <div class="skill-icon">
+                        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="30" cy="35" r="12" stroke="white" stroke-width="3"/>
+                            <circle cx="70" cy="35" r="12" stroke="white" stroke-width="3"/>
+                            <circle cx="50" cy="70" r="12" stroke="white" stroke-width="3"/>
+                            <line x1="38" y1="42" x2="46" y2="63" stroke="#ff2d95" stroke-width="3" filter="url(#glow-pink)"/>
+                            <line x1="62" y1="42" x2="54" y2="63" stroke="#ff2d95" stroke-width="3" filter="url(#glow-pink)"/>
+                            <line x1="42" y1="35" x2="58" y2="35" stroke="#ff2d95" stroke-width="3" filter="url(#glow-pink)"/>
+                        </svg>
+                    </div>
+                    <h3>Change Management</h3>
+                    <p>Empathische Führung und erfolgreiche Einführung neuer Technologien. Erfahrung in Stakeholder-Management auf allen Hierarchieebenen.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>KI-Portfolio</h2>
+                <p>Praxisprojekte aus der KI-Manager Fortbildung</p>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card fade-in">
+                    <div class="project-image">
+                        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <filter id="glow-cyan-project">
+                                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                                    <feMerge>
+                                        <feMergeNode in="coloredBlur"/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <rect x="20" y="15" width="60" height="70" rx="5" stroke="white" stroke-width="3" fill="rgba(255,255,255,0.1)"/>
+                            <line x1="30" y1="30" x2="70" y2="30" stroke="white" stroke-width="2.5"/>
+                            <line x1="30" y1="40" x2="65" y2="40" stroke="white" stroke-width="2.5" opacity="0.7"/>
+                            <line x1="30" y1="50" x2="70" y2="50" stroke="white" stroke-width="2.5" opacity="0.7"/>
+                            <line x1="30" y1="60" x2="60" y2="60" stroke="white" stroke-width="2.5" opacity="0.7"/>
+                            <circle cx="50" cy="70" r="8" fill="rgba(0,212,255,0.3)" stroke="#00d4ff" stroke-width="2" filter="url(#glow-cyan-project)"/>
+                            <path d="M45 70 L48 73 L55 66" stroke="#00d4ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow-cyan-project)"/>
+                        </svg>
+                    </div>
+                    <div class="project-content">
+                        <span class="project-tag">KI-Text</span>
+                        <h3>KI-Projektplan: Kundenservice-Optimierung</h3>
+                        <p>Vollständiger 12-Monats-Projektplan für KI-gestützte Kundenservice-Automatisierung. Inkl. Budget (180.000 EUR), Risikomanagement, RACI-Matrix und KPI-Framework.</p>
+                        <a href="#" class="project-link">Projekt ansehen</a>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in">
+                    <div class="project-image">
+                        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="15" y="20" width="70" height="60" rx="5" stroke="white" stroke-width="3" fill="rgba(255,255,255,0.1)"/>
+                            <path d="M25 45 Q35 35 45 45 T65 45 T75 45" stroke="white" stroke-width="3" fill="none"/>
+                            <circle cx="30" cy="50" r="8" fill="#00d4ff" stroke="white" stroke-width="2" opacity="0.8" filter="url(#glow-cyan-project)"/>
+                            <circle cx="50" cy="40" r="10" fill="#ff2d95" stroke="white" stroke-width="2" opacity="0.8" filter="url(#glow-pink)"/>
+                            <circle cx="70" cy="55" r="7" fill="#a855f7" stroke="white" stroke-width="2" opacity="0.8" filter="url(#glow-purple)"/>
+                            <path d="M20 30 L25 25 L30 30 L25 35 Z" fill="white"/>
+                        </svg>
+                    </div>
+                    <div class="project-content">
+                        <span class="project-tag">KI-Bild</span>
+                        <h3>KI-generierte Business-Visualisierungen</h3>
+                        <p>Professionelle Grafiken und Infografiken für Executive-Präsentationen und Marketing-Material, erstellt mit Midjourney und DALL-E 3.</p>
+                        <a href="#" class="project-link">Projekt ansehen</a>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in">
+                    <div class="project-image">
+                        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+                                    <stop offset="50%" style="stop-color:#a855f7;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#ff2d95;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M20 50 Q25 30 30 50 T40 50 T50 50 T60 50 T70 50 T80 50" stroke="url(#waveGrad)" stroke-width="4" fill="none" filter="url(#glow-cyan-project)"/>
+                            <path d="M20 55 Q25 70 30 55 T40 55 T50 55 T60 55 T70 55 T80 55" stroke="url(#waveGrad)" stroke-width="4" fill="none" opacity="0.6"/>
+                            <circle cx="20" cy="50" r="5" fill="#00d4ff" filter="url(#glow-cyan-project)"/>
+                            <circle cx="80" cy="50" r="5" fill="#ff2d95" filter="url(#glow-pink)"/>
+                            <path d="M35 25 L35 75 M50 25 L50 75 M65 25 L65 75" stroke="white" stroke-width="1.5" opacity="0.3"/>
+                        </svg>
+                    </div>
+                    <div class="project-content">
+                        <span class="project-tag">KI-Sound</span>
+                        <h3>Corporate Audio-Branding</h3>
+                        <p>KI-generierte Hintergrundmusik und Voice-Over für Corporate-Videos, Podcast-Intros und Webinar-Präsentationen mit Suno AI und ElevenLabs.</p>
+                        <a href="#" class="project-link">Projekt ansehen</a>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in">
+                    <div class="project-image">
+                        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="20" y="25" width="60" height="50" rx="5" stroke="white" stroke-width="3" fill="rgba(255,255,255,0.1)"/>
+                            <circle cx="50" cy="50" r="18" fill="rgba(255,45,149,0.3)" stroke="#ff2d95" stroke-width="2" filter="url(#glow-pink)"/>
+                            <polygon points="45,43 45,57 57,50" fill="white"/>
+                            <path d="M75 30 L85 25 L90 35" stroke="#00d4ff" stroke-width="2.5" fill="none" filter="url(#glow-cyan-project)"/>
+                            <path d="M75 70 L85 75 L90 65" stroke="#00d4ff" stroke-width="2.5" fill="none" filter="url(#glow-cyan-project)"/>
+                        </svg>
+                    </div>
+                    <div class="project-content">
+                        <span class="project-tag">KI-Video</span>
+                        <h3>Erklärvideo: KI im Controlling</h3>
+                        <p>Animiertes 3-Minuten-Erklärvideo über den strategischen Einsatz von KI-Tools in modernen Controlling-Prozessen. Produziert mit Synthesia und Runway ML.</p>
+                        <a href="#" class="project-link">Projekt ansehen</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Kontakt</h2>
+                <p>Lassen Sie uns über KI-Strategien sprechen</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <!-- E-Mail mit CYAN Glow -->
+                    <div class="contact-item fade-in">
+                        <div class="contact-icon">
+                            <svg width="35" height="35" viewBox="0 0 100 100" fill="none">
+                                <defs>
+                                    <filter id="cyan-glow-contact">
+                                        <feGaussianBlur stdDeviation="4"/>
+                                        <feComponentTransfer>
+                                            <feFuncA type="discrete" tableValues="1 1"/>
+                                        </feComponentTransfer>
+                                    </filter>
+                                </defs>
+                                <rect x="10" y="25" width="80" height="55" rx="8" stroke="white" stroke-width="4" fill="none"/>
+                                <path d="M10 30 L50 60 L90 30" stroke="#00d4ff" stroke-width="5" fill="none" stroke-linecap="round" filter="url(#cyan-glow-contact)"/>
+                                <circle cx="50" cy="58" r="5" fill="#00d4ff" filter="url(#cyan-glow-contact)"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4>E-Mail</h4>
+                            <p><a href="mailto:daniel.loeffler@gmail.com">daniel.loeffler@gmail.com</a></p>
+                        </div>
+                    </div>
+
+                    <!-- Standort mit PINK Glow -->
+                    <div class="contact-item fade-in">
+                        <div class="contact-icon">
+                            <svg width="35" height="35" viewBox="0 0 100 100" fill="none">
+                                <defs>
+                                    <filter id="pink-glow-contact">
+                                        <feGaussianBlur stdDeviation="4"/>
+                                    </filter>
+                                </defs>
+                                <path d="M50 15 C32 15 20 27 20 45 C20 68 50 90 50 90 C50 90 80 68 80 45 C80 27 68 15 50 15 Z" stroke="white" stroke-width="4" fill="none"/>
+                                <circle cx="50" cy="45" r="12" stroke="white" stroke-width="3" fill="none"/>
+                                <circle cx="50" cy="45" r="7" fill="#ff2d95" filter="url(#pink-glow-contact)"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4>Standort</h4>
+                            <p>Frankfurt am Main</p>
+                        </div>
+                    </div>
+
+                    <!-- LinkedIn mit PURPLE Glow -->
+                    <div class="contact-item fade-in">
+                        <div class="contact-icon">
+                            <svg width="35" height="35" viewBox="0 0 100 100" fill="none">
+                                <defs>
+                                    <filter id="purple-glow-contact">
+                                        <feGaussianBlur stdDeviation="4"/>
+                                    </filter>
+                                </defs>
+                                <rect x="15" y="15" width="70" height="70" rx="12" stroke="white" stroke-width="4" fill="none"/>
+                                <circle cx="32" cy="38" r="7" fill="#a855f7" filter="url(#purple-glow-contact)"/>
+                                <rect x="25" y="50" width="14" height="30" rx="3" fill="#a855f7" filter="url(#purple-glow-contact)"/>
+                                <path d="M46 58 L46 80 M46 52 C46 45 52 42 60 42 C68 42 75 45 75 53 L75 80" stroke="#a855f7" stroke-width="12" stroke-linecap="round" fill="none" filter="url(#purple-glow-contact)"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4>LinkedIn</h4>
+                            <p><a href="https://www.linkedin.com/in/daniel-loeffler-ffm/" target="_blank">daniel-loeffler-ffm</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form fade-in">
+                    <form>
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" placeholder="Ihr Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>E-Mail</label>
+                            <input type="email" placeholder="ihre@email.de" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Nachricht</label>
+                            <textarea placeholder="Ihre Nachricht..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%; cursor: pointer; border: none;">Nachricht senden</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/daniel-loeffler-ffm/" target="_blank" class="social-link">
+                    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="25" height="25">
+                        <defs>
+                            <filter id="footer-glow-filter">
+                                <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </defs>
+                        <rect x="25" y="25" width="50" height="50" rx="8" stroke="currentColor" stroke-width="3" fill="rgba(168,85,247,0.2)"/>
+                        <path d="M35 45 L35 55 M35 55 L45 55 M45 45 L45 65 M45 65 L55 65" stroke="currentColor" stroke-width="3" stroke-linecap="round" filter="url(#footer-glow-filter)"/>
+                        <rect x="57" y="52" width="8" height="13" fill="currentColor" rx="1" filter="url(#footer-glow-filter)"/>
+                    </svg>
+                </a>
+                <a href="mailto:daniel.loeffler@gmail.com" class="social-link">
+                    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="25" height="25">
+                        <rect x="20" y="30" width="60" height="45" rx="5" stroke="currentColor" stroke-width="3" fill="rgba(0,212,255,0.2)"/>
+                        <path d="M20 35 L50 55 L80 35" stroke="currentColor" stroke-width="3" fill="none" filter="url(#footer-glow-filter)"/>
+                        <circle cx="50" cy="52" r="3" fill="currentColor" filter="url(#footer-glow-filter)"/>
+                    </svg>
+                </a>
+            </div>
+            <p>&copy; 2026 Daniel Löffler · KI-Manager · Alle Rechte vorbehalten</p>
+        </div>
+    </footer>
+
+    <script>
+        // Particle Animation
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        const particleCount = 100;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.radius = Math.random() * 2 + 0.5;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(0, 212, 255, 0.6)';
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // Network Canvas
+        const networkCanvas = document.getElementById('network-canvas');
+        const networkCtx = networkCanvas.getContext('2d');
+        
+        networkCanvas.width = window.innerWidth;
+        networkCanvas.height = window.innerHeight;
+
+        const nodes = [];
+        const nodeCount = 30;
+        const connectionDistance = 200;
+
+        class Node {
+            constructor() {
+                this.x = Math.random() * networkCanvas.width;
+                this.y = Math.random() * networkCanvas.height;
+                this.vx = (Math.random() - 0.5) * 0.3;
+                this.vy = (Math.random() - 0.5) * 0.3;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > networkCanvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > networkCanvas.height) this.vy *= -1;
+            }
+
+            draw() {
+                networkCtx.beginPath();
+                networkCtx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+                networkCtx.fillStyle = 'rgba(255, 45, 149, 0.8)';
+                networkCtx.fill();
+            }
+        }
+
+        for (let i = 0; i < nodeCount; i++) {
+            nodes.push(new Node());
+        }
+
+        function drawConnections() {
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const dx = nodes[i].x - nodes[j].x;
+                    const dy = nodes[i].y - nodes[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < connectionDistance) {
+                        networkCtx.beginPath();
+                        networkCtx.strokeStyle = `rgba(255, 45, 149, ${0.3 * (1 - distance / connectionDistance)})`;
+                        networkCtx.lineWidth = 1;
+                        networkCtx.moveTo(nodes[i].x, nodes[i].y);
+                        networkCtx.lineTo(nodes[j].x, nodes[j].y);
+                        networkCtx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animateNetwork() {
+            networkCtx.clearRect(0, 0, networkCanvas.width, networkCanvas.height);
+            
+            nodes.forEach(node => {
+                node.update();
+                node.draw();
+            });
+            
+            drawConnections();
+            requestAnimationFrame(animateNetwork);
+        }
+
+        animateNetwork();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            networkCanvas.width = window.innerWidth;
+            networkCanvas.height = window.innerHeight;
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // Close mobile menu after click
+                    document.getElementById('nav-links').classList.remove('active');
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const navLinks = document.getElementById('nav-links');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Intersection Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Form submission
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Danke für Ihre Nachricht! Ich melde mich zeitnah bei Ihnen.');
+            e.target.reset();
+        });
+    </script>
 </body>
 </html>
