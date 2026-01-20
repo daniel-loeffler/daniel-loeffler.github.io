@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KI-Projektplan: Kundenservice-Optimierung | Daniel Löffler</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00d4ff;
+            --pink: #ff2d95;
+            --purple: #a855f7;
+            --dark: #0a0e27;
+            --dark-blue: #1a1f3a;
+            --white: #ffffff;
+            --gold: #ffd700;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            background: var(--dark);
+            color: var(--white);
+        }
+
+        /* Header */
+        .project-header {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-blue) 100%);
+            padding: 2rem;
+            border-bottom: 2px solid rgba(0, 212, 255, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid var(--primary);
+            border-radius: 50px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: var(--primary);
+            color: var(--dark);
+            transform: translateX(-5px);
+        }
+
+        .print-btn {
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--pink));
+            border: none;
+            border-radius: 50px;
+            color: var(--dark);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .print-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+        }
+
+        .project-title {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .project-title h1 {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            background: linear-gradient(135deg, var(--white), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-meta {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Content */
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem 3rem;
+        }
+
+        .content-card {
+            background: rgba(26, 31, 58, 0.6);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        h2 {
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(0, 212, 255, 0.3);
+        }
+
+        h3 {
+            font-size: clamp(1.3rem, 2vw, 1.8rem);
+            color: rgba(255, 255, 255, 0.9);
+            margin: 2rem 0 1rem;
+        }
+
+        h4 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin: 1.5rem 0 0.8rem;
+        }
+
+        p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        li {
+            margin-bottom: 0.8rem;
+            line-height: 1.7;
+        }
+
+        strong {
+            color: var(--primary);
+        }
+
+        em {
+            color: var(--pink);
+        }
+
+        /* Goal Boxes */
+        .goal-box {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(255, 45, 149, 0.1));
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 10px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        th {
+            background: linear-gradient(135deg, var(--primary), var(--pink));
+            color: var(--dark);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 700;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        tr:hover {
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        /* Budget Section */
+        .budget-highlight {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(168, 85, 247, 0.05));
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        /* KPI Cards */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .kpi-card {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(168, 85, 247, 0.1));
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .kpi-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0.5rem 0;
+        }
+
+        .kpi-label {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .kpi-description {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 0.8rem;
+            line-height: 1.5;
+        }
+
+        /* Gantt-Style Timeline */
+        .gantt-timeline {
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        .gantt-row {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gantt-label {
+            min-width: 250px;
+            font-weight: 600;
+            color: var(--primary);
+            padding-right: 1rem;
+        }
+
+        .gantt-bar-container {
+            flex: 1;
+            display: flex;
+            gap: 2px;
+            background: rgba(15, 23, 42, 0.5);
+            padding: 4px;
+            border-radius: 8px;
+        }
+
+        .gantt-month {
+            flex: 1;
+            height: 30px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .gantt-month.active {
+            background: linear-gradient(135deg, var(--primary), var(--pink));
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+        }
+
+        .gantt-month.inactive {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            
+            .back-btn, .print-btn {
+                display: none;
+            }
+            
+            .content-card {
+                background: white;
+                border: 1px solid #ddd;
+                page-break-inside: avoid;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .content-card {
+                padding: 1.5rem;
+            }
+            
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            table {
+                font-size: 0.85rem;
+            }
+            
+            .gantt-label {
+                min-width: 150px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="project-header">
+        <div class="header-content">
+            <a href="index.html" class="back-btn">← Zurück zum Portfolio</a>
+            <div class="project-title">
+                <h1>KI-Projektplan: Intelligente Kundenservice-Optimierung</h1>
+                <div class="project-meta">
+                    <span class="meta-item">📅 Januar 2026 - Dezember 2026</span>
+                    <span class="meta-item">💰 Budget: 180.000 EUR</span>
+                    <span class="meta-item">🏢 Mittelstand (150 MA)</span>
+                </div>
+            </div>
+            <button class="print-btn" onclick="window.print()">🖨️ Als PDF drucken</button>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content-wrapper">
+        
+        <!-- 1. Ausgangssituation -->
+        <div class="content-card">
+            <h2>1. Ausgangssituation & Projektziele</h2>
+            
+            <h3>Aktuelle Situation</h3>
+            <p>Unser Kundenservice bearbeitet monatlich ca. 2.500 Anfragen über E-Mail (70%) und Telefon (30%). Die durchschnittliche Bearbeitungszeit beträgt 24 Stunden bei E-Mails, wobei 60% der Anfragen Standardthemen betreffen (Lieferstatus, Produktinformationen, Rechnungsfragen). Das fünfköpfige Service-Team ist während Stoßzeiten überlastet, was zu Wartezeiten und sinkender Kundenzufriedenheit (aktuell 3,2/5 Sterne) führt. Wiederkehrende Anfragen binden unnötig Ressourcen.</p>
+
+            <h3>Projektziele (SMART)</h3>
+            
+            <div class="goal-box">
+                <strong>1. Effizienzsteigerung:</strong> Reduzierung der durchschnittlichen Antwortzeit bei Standard-Anfragen von 24h auf maximal 2h bis Q3 2026
+            </div>
+            
+            <div class="goal-box">
+                <strong>2. Automatisierung:</strong> 40% aller Kundenanfragen werden bis Q4 2026 vollautomatisch durch KI beantwortet, ohne menschliche Intervention
+            </div>
+            
+            <div class="goal-box">
+                <strong>3. Kundenzufriedenheit:</strong> Steigerung des Customer Satisfaction Score (CSAT) von 3,2 auf mindestens 4,0 von 5 Sternen bis Jahresende 2026
+            </div>
+
+            <h3>Top 3 Anforderungen</h3>
+            <ul>
+                <li><strong>24/7-Verfügbarkeit</strong> mit sofortiger Erstantwort</li>
+                <li><strong>Nahtlose Integration</strong> in bestehende Systeme (CRM, E-Mail, Website)</li>
+                <li><strong>DSGVO-konforme Datenverarbeitung</strong> mit höchsten Sicherheitsstandards</li>
+            </ul>
+        </div>
+
+        <!-- 2. Budget & Ressourcen -->
+        <div class="content-card">
+            <h2>2. Budget & Ressourcen</h2>
+            
+            <h3>2.1 Budgetübersicht</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Kostenblock</th>
+                        <th>Betrag</th>
+                        <th>Typ</th>
+                        <th>Zeitraum</th>
+                        <th>Owner (primär)</th>
+                        <th>Gate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>KI-Plattform Setup & Lizenzierung</td>
+                        <td>35.000 EUR</td>
+                        <td>Einmalig</td>
+                        <td>Q1 2026</td>
+                        <td>IT-Leitung / KI-PM</td>
+                        <td>MS1</td>
+                    </tr>
+                    <tr>
+                        <td>System-Integration & Entwicklung</td>
+                        <td>45.000 EUR</td>
+                        <td>Einmalig</td>
+                        <td>Q1–Q2 2026</td>
+                        <td>IT-Leitung</td>
+                        <td>MS2</td>
+                    </tr>
+                    <tr>
+                        <td>Datenvorbereitung & -migration</td>
+                        <td>15.000 EUR</td>
+                        <td>Einmalig</td>
+                        <td>Q1 2026</td>
+                        <td>IT-Leitung</td>
+                        <td>MS2</td>
+                    </tr>
+                    <tr>
+                        <td>Schulungen & Change Management</td>
+                        <td>12.000 EUR</td>
+                        <td>Einmalig</td>
+                        <td>Q2 2026</td>
+                        <td>Kundenservice-Leitung</td>
+                        <td>MS3</td>
+                    </tr>
+                    <tr style="background: rgba(0, 212, 255, 0.1); font-weight: 700;">
+                        <td>Zwischensumme Einmalig</td>
+                        <td>107.000 EUR</td>
+                        <td colspan="4"></td>
+                    </tr>
+                    <tr>
+                        <td>KI-Plattform Subscription (Enterprise)</td>
+                        <td>25.000 EUR</td>
+                        <td>Laufend (p.a.)</td>
+                        <td>Jul–Dez 2026*</td>
+                        <td>KI-PM</td>
+                        <td>MS3</td>
+                    </tr>
+                    <tr>
+                        <td>Cloud-Infrastruktur & API-Calls</td>
+                        <td>18.000 EUR</td>
+                        <td>Laufend (p.a.)</td>
+                        <td>Jul–Dez 2026*</td>
+                        <td>IT-Leitung</td>
+                        <td>MS3</td>
+                    </tr>
+                    <tr>
+                        <td>Wartung & Support</td>
+                        <td>12.000 EUR</td>
+                        <td>Laufend (p.a.)</td>
+                        <td>Jul–Dez 2026*</td>
+                        <td>IT-Leitung</td>
+                        <td>MS3</td>
+                    </tr>
+                    <tr>
+                        <td>Kontinuierliches Training & Optimierung</td>
+                        <td>18.000 EUR</td>
+                        <td>Laufend (p.a.)</td>
+                        <td>Jul–Dez 2026*</td>
+                        <td>KI-PM</td>
+                        <td>MS3</td>
+                    </tr>
+                    <tr style="background: rgba(255, 45, 149, 0.1); font-weight: 700;">
+                        <td>Zwischensumme Laufend (p.a.)</td>
+                        <td>73.000 EUR</td>
+                        <td colspan="4"></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p style="font-size: 0.9rem; color: rgba(255, 255, 255, 0.6); margin-top: 1rem;">
+                *Hinweis: Laufende Kosten sind als Jahreswerte angegeben; im Jahr 2026 fallen sie ab Rollout anteilig an (ab Juli), sofern nicht anders vertraglich geregelt.
+            </p>
+
+            <h3>2.2 Gate- und Abnahmekriterien (Go/No-Go)</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 20%;">Gate / Zeitpunkt</th>
+                        <th style="width: 15%;">Budgetfreigabe</th>
+                        <th style="width: 32%;">Mindest-Deliverables</th>
+                        <th style="width: 33%;">Abnahmekriterien</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Meilenstein 1</strong><br>Projektstart<br>(Januar 2026)</td>
+                        <td>50.000 EUR</td>
+                        <td>
+                            • Projektauftrag / Scope dokumentiert<br>
+                            • Team aufgesetzt und Kick-off durchgeführt<br>
+                            • Plattform-Screening gestartet<br>
+                            • Budget-Tracking eingerichtet<br>
+                            • Risiko-Register erstellt
+                        </td>
+                        <td>
+                            • DSGVO-Check: Datenkategorien + Pseudonymisierungskonzept abgestimmt
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Meilenstein 2</strong><br>Implementierung<br>(März–Juni 2026)</td>
+                        <td>70.000 EUR</td>
+                        <td>
+                            • PoC / MVP-Konzept abgeschlossen (Ende März 2026)<br>
+                            • Datenaufbereitung durchgeführt (Feb–Mär 2026)<br>
+                            • Integration in Ticket-System technisch lauffähig
+                        </td>
+                        <td>
+                            • Testprotokolle (funktional + Sicherheit) ohne kritische Findings<br>
+                            • Human-in-the-loop Prozess aktiv<br>
+                            • Pilot-Setup vorbereitet
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Meilenstein 3</strong><br>Rollout & Betrieb<br>(Juli–Dezember 2026)</td>
+                        <td>60.000 EUR</td>
+                        <td>
+                            • Pilotbetrieb abgeschlossen (Mai–Juni 2026)<br>
+                            • Schulungen & Change-Maßnahmen umgesetzt<br>
+                            • Rollout-Plan freigegeben
+                        </td>
+                        <td>
+                            • Monitoring-Dashboard aktiv (KPIs)<br>
+                            • Betriebs-/Support-Prozess etabliert<br>
+                            • Reporting-Takt gestartet
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>2.3 Mini-Business-Case (auf Basis der KPI „Cost per Contact")</h3>
+            
+            <div class="budget-highlight">
+                <table style="background: transparent;">
+                    <tbody>
+                        <tr>
+                            <td>Anfragevolumen</td>
+                            <td>2.500 Kontakte / Monat (30.000 / Jahr)</td>
+                        </tr>
+                        <tr>
+                            <td>Baseline Cost per Contact</td>
+                            <td>ca. 8,00 EUR</td>
+                        </tr>
+                        <tr>
+                            <td>Ziel Cost per Contact</td>
+                            <td>5,60 EUR</td>
+                        </tr>
+                        <tr>
+                            <td>Baseline jährliche Servicekosten (all-in)</td>
+                            <td>240.000 EUR</td>
+                        </tr>
+                        <tr>
+                            <td>Ziel jährliche Servicekosten (all-in)</td>
+                            <td>168.000 EUR</td>
+                        </tr>
+                        <tr style="background: rgba(0, 212, 255, 0.1); font-weight: 700;">
+                            <td>Jährliche Einsparung</td>
+                            <td>72.000 EUR</td>
+                        </tr>
+                        <tr>
+                            <td>Einmaliges Projektbudget (Q1–Q2 2026)</td>
+                            <td>107.000 EUR</td>
+                        </tr>
+                        <tr style="background: rgba(255, 45, 149, 0.1); font-weight: 700; color: var(--pink);">
+                            <td>Indikativer Payback</td>
+                            <td>ca. 18 Monate (~1,5 Jahre)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 3. Team & Rollen -->
+        <div class="content-card">
+            <h2>3. Team & Rollen</h2>
+            
+            <h3>Teamzusammensetzung</h3>
+            <p>Für die Umsetzung des KI-Projekts wird ein schlankes, interdisziplinäres Kernteam vorgesehen. Die Kapazitätsangaben erfolgen in Full-Time-Equivalents (FTE) und stellen durchschnittliche Ressourceneinsätze über die Projektlaufzeit dar. Es handelt sich ausdrücklich nicht um dauerhaft gebundene Vollzeitstellen.</p>
+
+            <h4>Kernteam (intern, durchschnittliche Kapazität)</h4>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rolle</th>
+                        <th>Ø-FTE</th>
+                        <th>Aufgabenfokus</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>KI-Projektmanager:in</td>
+                        <td>0,40 FTE</td>
+                        <td>Gesamtsteuerung, Koordination externer Partner, KPI-Tracking, Reporting</td>
+                    </tr>
+                    <tr>
+                        <td>IT-Leitung</td>
+                        <td>0,20 FTE</td>
+                        <td>Systemarchitektur, Integration, IT-Security, technische Abnahme</td>
+                    </tr>
+                    <tr>
+                        <td>Kundenservice-Leitung</td>
+                        <td>0,20 FTE</td>
+                        <td>Use-Case-Definition, Qualitätskontrolle, Akzeptanz im Fachbereich</td>
+                    </tr>
+                    <tr>
+                        <td>Datenschutzbeauftragte:r</td>
+                        <td>0,10 FTE</td>
+                        <td>DSGVO-Prüfung, DSFA, datenschutzrechtliche Freigaben</td>
+                    </tr>
+                    <tr style="background: rgba(0, 212, 255, 0.1); font-weight: 700;">
+                        <td>Summe Kernteam (intern)</td>
+                        <td>0,90 FTE</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Ergänzende Ressourcen</h4>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rolle</th>
+                        <th>Ø-FTE</th>
+                        <th>Einordnung</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>KI-Trainer:in (intern/extern)</td>
+                        <td>0,25 FTE</td>
+                        <td>Modelltraining, Prompt-Optimierung, Qualitätssicherung</td>
+                    </tr>
+                    <tr>
+                        <td>Externe Entwickler:innen</td>
+                        <td>projektbezogen</td>
+                        <td>Umsetzung spezifischer Integrations- und Anpassungsaufgaben</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>RACI-Matrix (Hauptaufgaben)</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aufgabe</th>
+                        <th>KI-PM</th>
+                        <th>IT-Leitung</th>
+                        <th>Service-Leitung</th>
+                        <th>DSB</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Projektplanung</td>
+                        <td>A/R</td>
+                        <td>C</td>
+                        <td>C</td>
+                        <td>I</td>
+                    </tr>
+                    <tr>
+                        <td>Plattformauswahl</td>
+                        <td>A</td>
+                        <td>R</td>
+                        <td>C</td>
+                        <td>C</td>
+                    </tr>
+                    <tr>
+                        <td>Systemintegration</td>
+                        <td>A</td>
+                        <td>R</td>
+                        <td>C</td>
+                        <td>I</td>
+                    </tr>
+                    <tr>
+                        <td>Datenvorbereitung</td>
+                        <td>A</td>
+                        <td>C</td>
+                        <td>R</td>
+                        <td>C</td>
+                    </tr>
+                    <tr>
+                        <td>Training & Testing</td>
+                        <td>A</td>
+                        <td>C</td>
+                        <td>R</td>
+                        <td>I</td>
+                    </tr>
+                    <tr>
+                        <td>Compliance-Prüfung</td>
+                        <td>A</td>
+                        <td>C</td>
+                        <td>I</td>
+                        <td>R</td>
+                    </tr>
+                    <tr>
+                        <td>Go-Live Entscheidung</td>
+                        <td>A</td>
+                        <td>C</td>
+                        <td>C</td>
+                        <td>C</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p style="font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-top: 1rem;">
+                <em>A=Accountable (Verantwortlich), R=Responsible (Durchführend), C=Consulted (Konsultiert), I=Informed (Informiert)</em>
+            </p>
+        </div>
+
+        <!-- 4. Datenbeschaffung -->
+        <div class="content-card">
+            <h2>4. Datenbeschaffung & -vorbereitung</h2>
+            
+            <h3>Benötigte Daten</h3>
+            <ul>
+                <li><strong>Historische Kundenanfragen:</strong> Mindestens 10.000 E-Mail-Tickets aus den letzten 24 Monaten mit zugehörigen Antworten</li>
+                <li><strong>FAQ-Datenbank:</strong> Bestehende Wissensdatenbank mit ca. 150 Einträgen</li>
+                <li><strong>CRM-Kundendaten:</strong> Anonymisierte Kundenprofile zur Kontextualisierung</li>
+                <li><strong>Feedback-Daten:</strong> Kundenbewertungen und Kommentare zur Servicequalität</li>
+            </ul>
+
+            <h3>Datenquellen</h3>
+            <p>Hauptquelle ist unser bestehendes Ticket-System (Zendesk), ergänzt durch CRM-Daten (Salesforce) und die interne Confluence-Wissensdatenbank. Alle Systeme verfügen über Export-Schnittstellen.</p>
+
+            <h3>Datenaufbereitung (Februar-März 2026)</h3>
+            
+            <h4>Prozess:</h4>
+            <ol>
+                <li><strong>Datensicherung & Pseudonymisierung:</strong> Entfernung aller personenbezogenen Daten gemäß DSGVO (Namen, Adressen, Auftragsnummern durch Platzhalter ersetzen)</li>
+                <li><strong>Qualitätskontrolle:</strong> Manuelle Stichprobenprüfung von 500 Tickets, Entfernung unvollständiger oder nicht-repräsentativer Einträge</li>
+                <li><strong>Kategorisierung:</strong> Klassifizierung in Themencluster (Lieferstatus, Retoure, Produktfragen, Rechnung, etc.)</li>
+                <li><strong>Annotation:</strong> Team-Workshop zur Bewertung von Musterlösungen für KI-Training (3 Tage)</li>
+            </ol>
+
+            <h4>Zeitplan:</h4>
+            <ul>
+                <li>Woche 1-2: Datenexport und erste Bereinigung</li>
+                <li>Woche 3-4: Pseudonymisierung und Datenschutzprüfung</li>
+                <li>Woche 5-6: Kategorisierung und Qualitätssicherung</li>
+                <li>Woche 7-8: Annotation und Trainingsset-Erstellung</li>
+            </ul>
+        </div>
+
+        <!-- 5. Implementierung -->
+        <div class="content-card">
+            <h2>5. Implementierung & Integration</h2>
+            
+            <h3>KI-Lösungsarchitektur</h3>
+            
+            <h4>Kern-Komponenten:</h4>
+            <ol>
+                <li><strong>Intelligenter Chatbot (Website):</strong> Erste Anlaufstelle für Kundenanfragen mit Natural Language Understanding</li>
+                <li><strong>E-Mail-Klassifizierung:</strong> Automatische Kategorisierung und Priorisierung eingehender E-Mails</li>
+                <li><strong>Response-Generator:</strong> KI-gestützte Antworterstellung für Standard-Anfragen mit Human-in-the-Loop-Option</li>
+                <li><strong>Sentiment-Analyse:</strong> Erkennung dringender oder emotional kritischer Anfragen zur Priorisierung</li>
+            </ol>
+
+            <p><strong>Technologie-Stack:</strong> Hybrid-Ansatz mit spezialisierter KI-Plattform (z.B. Ada, Intercom Enterprise) für Chatbot und LLM-API (GPT-4o über Azure OpenAI) für komplexe Antwortgenerierung.</p>
+
+            <h3>Integrationsstrategie</h3>
+            
+            <h4>Systemanbindungen:</h4>
+            <ul>
+                <li>Website-Chatbot via JavaScript-Widget (responsive Design)</li>
+                <li>E-Mail-System (Microsoft 365) über API-Integration</li>
+                <li>CRM (Salesforce) bidirektionale Synchronisation für Ticketverlauf</li>
+                <li>Wissensdatenbank (Confluence) als Retrieval-Augmented-Generation (RAG) Quelle</li>
+            </ul>
+
+            <h3>Pilotphase (Mai-Juni 2026)</h3>
+            <p>Kontrollierter Start mit 20% des Anfragevolumens:</p>
+            <ul>
+                <li>Chatbot zunächst nur für eingeloggte Bestandskunden</li>
+                <li>E-Mail-KI im "Shadow Mode" (Vorschläge zeigen, aber manuelle Freigabe erforderlich)</li>
+                <li>Intensive Monitoring und tägliches Feedback-Review</li>
+                <li>Zwei-Wochen-Sprints für schnelle Anpassungen</li>
+            </ul>
+
+            <h3>Rollout-Plan (Juli-Oktober 2026)</h3>
+            <p>Stufenweiser Ansatz:</p>
+            <ul>
+                <li><strong>Juli:</strong> Chatbot für alle Website-Besucher + 50% E-Mail-Automatisierung</li>
+                <li><strong>August:</strong> Vollautomatische Antworten für Top-10-Standardfragen</li>
+                <li><strong>September:</strong> Integration telefonischer Transkription und Callback-Planung</li>
+                <li><strong>Oktober:</strong> Vollständiger Rollout mit 24/7-Betrieb</li>
+            </ul>
+            <p><em>Kein "Big Bang" - stufenweise Erhöhung minimiert Risiken und ermöglicht kontinuierliches Lernen.</em></p>
+        </div>
+
+        <!-- 6. Agile Methoden -->
+        <div class="content-card">
+            <h2>6. Agile Methoden</h2>
+            
+            <h3>Gewählter Ansatz: Scrum mit Elementen aus Design Thinking</h3>
+            
+            <p><strong>Begründung der Methodenwahl:</strong> Scrum bietet die nötige Flexibilität für ein innovatives KI-Projekt, bei dem Requirements sich durch Nutzer-Feedback stetig weiterentwickeln. Die iterative Entwicklung ist ideal für Machine Learning, wo Modelle kontinuierlich verbessert werden müssen. Design Thinking-Elemente sichern die Nutzer-Zentrierung.</p>
+
+            <h3>Umsetzung</h3>
+            
+            <h4>Sprint-Struktur:</h4>
+            <ul>
+                <li><strong>Sprint-Länge:</strong> 2 Wochen (ermöglicht schnelle Anpassungen bei KI-Modellen)</li>
+                <li><strong>Sprint Planning:</strong> Montag, 9:00-11:00 Uhr (Priorisierung Product Backlog)</li>
+                <li><strong>Daily Standup:</strong> Täglich (außer Montags), 9:15 Uhr, 15 Minuten (Fokus: Blocker und Abhängigkeiten)</li>
+                <li><strong>Sprint Review:</strong> Freitag alle zwei Wochen, 14:00-15:30 Uhr (Demo mit Stakeholdern)</li>
+                <li><strong>Sprint Retrospektive:</strong> Unmittelbar nach Review, 15:45-16:45 Uhr</li>
+            </ul>
+
+            <h4>KI-spezifische Anpassungen:</h4>
+            <ul>
+                <li>Dediziertes "Model Review Meeting" nach jedem Sprint zur Bewertung von Accuracy, Precision und Recall</li>
+                <li>"Bias Check Sessions" alle vier Wochen zur Überprüfung von Fairness und Diskriminierungsfreiheit</li>
+                <li>User Testing Sessions mit echten Kundenservice-Mitarbeitenden und Test-Kunden jeden Sprint</li>
+            </ul>
+
+            <p>Das Product Backlog wird vom Service-Team kontinuierlich mit echten Anfrage-Mustern und Edge Cases gefüllt.</p>
+        </div>
+
+        <!-- 7. Risikomanagement -->
+        <div class="content-card">
+            <h2>7. Risikomanagement</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">Risiko</th>
+                        <th style="width: 12%;">Eintritts-WSK</th>
+                        <th style="width: 12%;">Impact</th>
+                        <th>Gegenmaßnahmen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1. Unzureichende KI-Antwortqualität</strong></td>
+                        <td style="color: #ff2d95; font-weight: 700;">Hoch (60%)</td>
+                        <td style="color: #ff2d95; font-weight: 700;">Kritisch</td>
+                        <td>
+                            • Hybrid-Ansatz mit Human-in-the-Loop für erste 3 Monate<br>
+                            • Confidence-Threshold: Nur Antworten >85% Sicherheit automatisch<br>
+                            • Wöchentliche Qualitäts-Reviews mit Sample-Testing<br>
+                            • Eskalationspfad an menschliche Agents bei Unsicherheit
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>2. Mangelnde Akzeptanz im Service-Team</strong></td>
+                        <td style="color: #ffd700; font-weight: 700;">Mittel (40%)</td>
+                        <td style="color: #ff2d95; font-weight: 700;">Hoch</td>
+                        <td>
+                            • Frühzeitige Einbindung in Design-Prozess<br>
+                            • Transparente Kommunikation: KI als Unterstützung, kein Ersatz<br>
+                            • Upskilling-Programm für komplexere Aufgaben<br>
+                            • Champions-Programm: Early Adopters als Multiplikatoren
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>3. Datenschutz-Compliance-Verletzung</strong></td>
+                        <td style="color: #00d4ff; font-weight: 700;">Niedrig (15%)</td>
+                        <td style="color: #ff2d95; font-weight: 700;">Kritisch</td>
+                        <td>
+                            • Privacy by Design von Anfang an<br>
+                            • DSGVO-Folgenabschätzung vor Go-Live<br>
+                            • Externe Datenschutz-Auditierung (Q2)<br>
+                            • Regelmäßige Compliance-Checks durch DSB
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>4. Technische Integration scheitert</strong></td>
+                        <td style="color: #ffd700; font-weight: 700;">Mittel (35%)</td>
+                        <td style="color: #ff2d95; font-weight: 700;">Hoch</td>
+                        <td>
+                            • Proof of Concept mit allen System-Schnittstellen vor Vollauftrag<br>
+                            • Fallback-Szenario: Standalone-Lösung ohne vollständige CRM-Integration<br>
+                            • Technischer Berater mit Integrations-Expertise (extern)<br>
+                            • Buffer im Zeitplan (4 Wochen)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>5. Budget-Überschreitung</strong></td>
+                        <td style="color: #ffd700; font-weight: 700;">Mittel (45%)</td>
+                        <td style="color: #ffd700; font-weight: 700;">Mittel</td>
+                        <td>
+                            • Strikte Meilenstein-Budgetierung mit Gates<br>
+                            • Monatliches Budget-Controlling<br>
+                            • 15% Puffer eingeplant (27.000 EUR)<br>
+                            • Priorisierung Must-haves vs. Nice-to-haves
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p style="margin-top: 1.5rem;"><strong>Eskalationsprozess:</strong> Bei Risikoeintritt erfolgt sofortige Information an Projektleitung. Bei kritischen Risiken (Impact "Kritisch") wird innerhalb von 24h ein Krisenmeeting mit Geschäftsführung einberufen.</p>
+        </div>
+
+        <!-- 8. Monitoring & Wartung -->
+        <div class="content-card">
+            <h2>8. Monitoring & Wartung</h2>
+            
+            <h3>Performance-Überwachung</h3>
+            
+            <h4>Technisches Monitoring (24/7 automatisiert):</h4>
+            <ul>
+                <li><strong>System-Verfügbarkeit:</strong> Uptime-Monitoring mit Alert bei <99,5% (PagerDuty)</li>
+                <li><strong>Response-Zeiten:</strong> API-Latenz <2 Sekunden, Chatbot-Antwort <3 Sekunden</li>
+                <li><strong>Fehlerrate:</strong> Alert bei >5% fehlgeschlagener Anfragen</li>
+                <li><strong>Modell-Confidence:</strong> Dashboard zeigt Verteilung der Confidence-Scores</li>
+            </ul>
+
+            <h4>Qualitäts-Monitoring (wöchentlich):</h4>
+            <ul>
+                <li>Stichprobenprüfung von 50 automatischen Antworten durch Service-Team</li>
+                <li>Analyse von Eskalationen (welche Anfragen wurden an Menschen weitergeleitet?)</li>
+                <li>Kundenfeedback-Auswertung (Thumbs up/down nach KI-Interaktion)</li>
+            </ul>
+
+            <h3>Verantwortlichkeiten</h3>
+            <ul>
+                <li><strong>Tägliches Monitoring:</strong> KI-Trainer:in (technische Metriken) + Service-Team (Qualität)</li>
+                <li><strong>Wöchentliche Optimierung:</strong> KI-Manager:in + KI-Trainer:in</li>
+                <li><strong>Monatliche Strategie-Reviews:</strong> Gesamtes Kernteam + Geschäftsführung</li>
+            </ul>
+
+            <h3>Wartungs- & Update-Rhythmus</h3>
+            
+            <h4>Modell-Updates:</h4>
+            <ul>
+                <li><strong>Kontinuierlich:</strong> Automatisches Retraining mit neuen Anfragen (wöchentlich)</li>
+                <li><strong>Quartalsweise:</strong> Major-Updates mit neuen Trainingsdaten und erweiterten Funktionen</li>
+                <li><strong>Bei Bedarf:</strong> Hotfixes bei erkannten systematischen Fehlern (innerhalb 48h)</li>
+            </ul>
+
+            <p><strong>Feedback-Integration:</strong> Alle negativen Kundenbewertungen fließen in priorisiertes Verbesserungs-Backlog. Monatliches Meeting zur Identifikation von Mustern und Ableitung von Trainingsmaßnahmen.</p>
+        </div>
+
+        <!-- 9. Erfolgsmessung -->
+        <div class="content-card">
+            <h2>9. Erfolgsmessung & Reporting</h2>
+            
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-label">Ziel Q4 2026</div>
+                    <div class="kpi-number">40%</div>
+                    <div class="kpi-description"><strong>Automatisierungsgrad</strong><br>Vollautomatisch gelöste Anfragen ohne menschliche Intervention</div>
+                </div>
+                
+                <div class="kpi-card">
+                    <div class="kpi-label">Ziel Q3 2026</div>
+                    <div class="kpi-number">&lt; 2h</div>
+                    <div class="kpi-description"><strong>First Response Time</strong><br>Durchschnittliche Zeit bis zur ersten Antwort bei Standard-Anfragen</div>
+                </div>
+                
+                <div class="kpi-card">
+                    <div class="kpi-label">Ziel Jahresende 2026</div>
+                    <div class="kpi-number">4,0/5</div>
+                    <div class="kpi-description"><strong>Customer Satisfaction Score</strong><br>Kundenzufriedenheit nach Interaktion (aktuell 3,2)</div>
+                </div>
+                
+                <div class="kpi-card">
+                    <div class="kpi-label">Ziel kontinuierlich</div>
+                    <div class="kpi-number">&gt; 75%</div>
+                    <div class="kpi-description"><strong>Resolution Rate</strong><br>Erfolgreich gelöste Anfragen ohne Nachfragen</div>
+                </div>
+                
+                <div class="kpi-card">
+                    <div class="kpi-label">Ziel Jahresende 2026</div>
+                    <div class="kpi-number">5,60 EUR</div>
+                    <div class="kpi-description"><strong>Cost per Contact</strong><br>Reduktion um 30% von ca. 8 EUR auf 5,60 EUR pro bearbeitetem Kundenkontakt</div>
+                </div>
+            </div>
+
+            <h3>Reporting-Struktur</h3>
+            
+            <h4>Wöchentlich (intern):</h4>
+            <p>Kurz-Dashboard an Kernteam (E-Mail, 1 Seite) mit den 5 KPIs und Trend-Entwicklung</p>
+
+            <h4>Monatlich (Management):</h4>
+            <p>Detaillierter Report (15 Minuten Präsentation) an Geschäftsführung mit:</p>
+            <ul>
+                <li>KPI-Entwicklung vs. Ziele</li>
+                <li>Wichtigste Learnings & Optimierungen</li>
+                <li>Finanzstatus (Budget-Tracking)</li>
+                <li>Nächste Schritte</li>
+            </ul>
+
+            <h4>Quartalsweise (Stakeholder):</h4>
+            <p>Umfassende Review (45 Minuten) mit erweiterten Stakeholdern inklusive:</p>
+            <ul>
+                <li>ROI-Berechnung</li>
+                <li>Kundenfeedback-Highlights</li>
+                <li>Strategische Empfehlungen für Skalierung</li>
+            </ul>
+
+            <p style="margin-top: 1.5rem;"><em>Alle Reports werden im Projektmanagement-Tool (z.B. Jira) dokumentiert und sind für Berechtigte jederzeit einsehbar.</em></p>
+        </div>
+
+        <!-- 10. Best Practices -->
+        <div class="content-card">
+            <h2>10. Best Practices Integration</h2>
+            
+            <div class="budget-highlight" style="border-left: 4px solid var(--gold);">
+                <h4 style="color: var(--gold); margin-bottom: 1rem;">Best Practice 1: Hybrid Human-AI Approach</h4>
+                <p style="font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-bottom: 1rem;"><em>Quelle: Zendesk Customer Experience Trends Report 2024</em></p>
+                
+                <p>Zendesk dokumentiert, dass die erfolgreichsten KI-Implementierungen einen "Human-in-the-Loop"-Ansatz verfolgen, bei dem KI und menschliche Agents nahtlos zusammenarbeiten. Unternehmen mit diesem Ansatz erreichen 25% höhere Kundenzufriedenheit als reine Automatisierung.</p>
+                
+                <p style="margin-top: 1rem;"><strong>Integration in unseren Plan:</strong></p>
+                <ul>
+                    <li>Wir implementieren ein Confidence Scoring System: KI-Antworten mit >85% Confidence werden automatisch versendet, Antworten zwischen 70-85% werden dem Service-Team als Vorschlag präsentiert, <70% werden direkt eskaliert</li>
+                    <li>Service-Mitarbeiter erhalten Dashboard mit KI-Vorschlägen und können mit einem Klick übernehmen oder anpassen</li>
+                    <li>Jede menschliche Korrektur fließt automatisch ins Training zurück (Reinforcement Learning from Human Feedback)</li>
+                </ul>
+            </div>
+
+            <div class="budget-highlight" style="border-left: 4px solid var(--gold); margin-top: 2rem;">
+                <h4 style="color: var(--gold); margin-bottom: 1rem;">Best Practice 2: Continuous Training mit Real-World Data</h4>
+                <p style="font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-bottom: 1rem;"><em>Quelle: Salesforce "State of Service" Report 2024</em></p>
+                
+                <p>Salesforce zeigt in Fallstudien, dass KI-Systeme, die kontinuierlich mit echten Kundendaten nachtrainiert werden, eine 40% höhere Accuracy nach 6 Monaten erreichen als statische Modelle. Entscheidend ist ein strukturierter Feedback-Loop.</p>
+                
+                <p style="margin-top: 1rem;"><strong>Integration in unseren Plan:</strong></p>
+                <ul>
+                    <li>Automatisiertes wöchentliches Retraining mit allen neuen Anfragen und Lösungen</li>
+                    <li>Quarterly Major Updates mit erweiterten Datensätzen und neuen Produktinformationen</li>
+                    <li>Dedizierte "Learning Sprints" alle 3 Monate: 2 Wochen intensives Training mit spezifischen Schwachstellen-Daten</li>
+                    <li>A/B-Testing neuer Modellversionen mit 10% Traffic vor Full Rollout</li>
+                </ul>
+            </div>
+
+            <p style="margin-top: 2rem;"><em>Diese Best Practices reduzieren das Risiko einer "stagnierenden KI" und stellen sicher, dass unser System mit dem Geschäft mitwächst.</em></p>
+        </div>
+
+        <!-- 11. Herausforderungen -->
+        <div class="content-card">
+            <h2>11. Herausforderungen & Lösungen</h2>
+            
+            <div class="budget-highlight" style="border-left: 4px solid var(--pink);">
+                <h4 style="color: var(--pink); margin-bottom: 1rem;">Herausforderung 1: Umgang mit Edge Cases und unerwarteten Anfragen</h4>
+                <p>Trotz gründlichem Training wird die KI auf Anfragen stoßen, die nicht im Trainingsdatensatz vorkamen. Kunden stellen teilweise sehr spezifische oder ungewöhnliche Fragen.</p>
+                
+                <p style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1);"><strong>Lösungsansatz:</strong> Wir planen von Anfang an eine "Graceful Degradation" Strategie. Die KI kommuniziert bei Unsicherheit transparent: "Ich bin mir nicht sicher, ob ich das korrekt verstanden habe. Ich verbinde Sie mit einem Kollegen, der Ihnen sicher helfen kann." Zusätzlich erstellen wir eine "Unknown Intent Collection", in der alle nicht erkannten Anfragen gesammelt werden. Diese werden monatlich analysiert und bei relevanter Häufigkeit ins Training aufgenommen.</p>
+            </div>
+
+            <div class="budget-highlight" style="border-left: 4px solid var(--pink); margin-top: 2rem;">
+                <h4 style="color: var(--pink); margin-bottom: 1rem;">Herausforderung 2: Change Management und Team-Akzeptanz</h4>
+                <p>Service-Mitarbeiter könnten die KI als Bedrohung ihrer Jobs wahrnehmen und sich gegen die Veränderung sträuben, was die Implementierung sabotieren kann.</p>
+                
+                <p style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1);"><strong>Lösungsansatz:</strong> Frühzeitige und transparente Kommunikation ist entscheidend. Wir positionieren KI klar als "Entlastung von Routineaufgaben", nicht als Ersatz. Parallel entwickeln wir ein Upskilling-Programm, das zeigt, wie Mitarbeiter sich auf wertvollere Tätigkeiten fokussieren können (komplexe Problemlösungen, Beziehungsaufbau, Eskalationsmanagement). Außerdem werden Service-Mitarbeiter aktiv in den Trainingsprozess eingebunden – sie werden zu "KI-Trainern" und sind stolz auf "ihre" KI.</p>
+            </div>
+
+            <div class="budget-highlight" style="border-left: 4px solid var(--pink); margin-top: 2rem;">
+                <h4 style="color: var(--pink); margin-bottom: 1rem;">Herausforderung 3: Balancing Automation und Personalisierung</h4>
+                <p>Kunden erwarten heute sowohl schnelle Antworten als auch persönlichen Service. Zu generische KI-Antworten können unpersönlich wirken und die Kundenbindung schwächen.</p>
+                
+                <p style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1);"><strong>Lösungsansatz:</strong> Unsere KI nutzt CRM-Daten für Kontext: Sie "kennt" die Kundenhistorie und passt Antworten entsprechend an (z.B. "Ich sehe, Sie hatten letzten Monat bereits eine ähnliche Anfrage..."). Zusätzlich trainieren wir das Modell auf einen freundlichen, markenkonsistenten Ton. Bei kritischen Situationen (z.B. Beschwerden) erfolgt immer eine sofortige Weiterleitung an menschliche Agents.</p>
+            </div>
+
+            <h3 style="margin-top: 2rem;">Reflexion: Anpassungen bei echtem Projekt</h3>
+            <p>Bei einem realen Projekt würde ich zusätzlich:</p>
+            <ul>
+                <li><strong>Intensivere Nutzerforschung:</strong> Mindestens 10 Customer Journey Mappings mit echten Kunden vor Projektstart</li>
+                <li><strong>Längere Pilotphase:</strong> 3 Monate statt 2, um saisonale Schwankungen und verschiedene Szenarien abzudecken</li>
+                <li><strong>Externe Expertise früher einbinden:</strong> KI-Ethics-Berater und UX-Researcher von Anfang an im Team</li>
+                <li><strong>Mehr Budget für Change Management:</strong> Mindestens 10% des Gesamtbudgets nur für Schulung und Mitarbeiter-Engagement</li>
+            </ul>
+        </div>
+
+        <!-- Anhang: Gantt-Chart -->
+        <div class="content-card">
+            <h2>Anhang: Gantt-Chart (Projektzeitplan 2026)</h2>
+            
+            <div class="gantt-timeline">
+                <div class="gantt-row" style="background: rgba(0, 212, 255, 0.05); font-weight: 700; padding: 1rem;">
+                    <div class="gantt-label">Arbeitspaket</div>
+                    <div class="gantt-bar-container" style="background: transparent;">
+                        <div style="flex: 1; text-align: center; color: var(--primary); font-size: 0.85rem;">Jan</div>
+                        <div style="flex: 1; text-align: center; color: var(--primary); font-size: 0.85rem;">Feb</div>
+                        <div style="flex: 1; text-align: center; color: var(--primary); font-size: 0.85rem;">Mär</div>
+                        <div style="flex: 1; text-align: center; color: var(--primary); font-size: 0.85rem;">Apr</div>
+                        <div style="flex: 1; text-align: center; color: var(--primary); font-size: 0.85rem;">Mai</div>
+                        <div style="flex: 1; text-align: center; color: var(--primary); font-size: 0.85rem;">Jun</div>
+                        <div style="flex: 1; text-align: center; color: var(--primary); font-size: 0.85rem;">Jul</div>
+                        <div style="flex: 1; text-align: center; color: var(--primary); font-size: 0.85rem;">Aug</div>
+                        <div style="flex: 1; text-align: center; color: var(--primary); font-size: 0.85rem;">Sep</div>
+                        <div style="flex: 1; text-align: center; color: var(--primary); font-size: 0.85rem;">Okt</div>
+                        <div style="flex: 1; text-align: center; color: var(--primary); font-size: 0.85rem;">Nov</div>
+                        <div style="flex: 1; text-align: center; color: var(--primary); font-size: 0.85rem;">Dez</div>
+                    </div>
+                </div>
+
+                <div class="gantt-row">
+                    <div class="gantt-label">Kick-off & Projektsetup</div>
+                    <div class="gantt-bar-container">
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                    </div>
+                </div>
+
+                <div class="gantt-row">
+                    <div class="gantt-label">Plattformauswahl & Beschaffung</div>
+                    <div class="gantt-bar-container">
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                    </div>
+                </div>
+
+                <div class="gantt-row">
+                    <div class="gantt-label">DSGVO/DSFA & Security-Anforderungen</div>
+                    <div class="gantt-bar-container">
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                    </div>
+                </div>
+
+                <div class="gantt-row">
+                    <div class="gantt-label">Datenbeschaffung</div>
+                    <div class="gantt-bar-container">
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                    </div>
+                </div>
+
+                <div class="gantt-row">
+                    <div class="gantt-label">Datenaufbereitung & Migration</div>
+                    <div class="gantt-bar-container">
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                    </div>
+                </div>
+
+                <div class="gantt-row">
+                    <div class="gantt-label">Proof of Concept (PoC)</div>
+                    <div class="gantt-bar-container">
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                    </div>
+                </div>
+
+                <div class="gantt-row">
+                    <div class="gantt-label">Chatbot/RAG-Entwicklung</div>
+                    <div class="gantt-bar-container">
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                    </div>
+                </div>
+
+                <div class="gantt-row">
+                    <div class="gantt-label">Systemintegration (Ticket/CRM)</div>
+                    <div class="gantt-bar-container">
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                    </div>
+                </div>
+
+                <div class="gantt-row">
+                    <div class="gantt-label">Testing & UAT</div>
+                    <div class="gantt-bar-container">
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                    </div>
+                </div>
+
+                <div class="gantt-row">
+                    <div class="gantt-label">Pilotbetrieb (20% Traffic)</div>
+                    <div class="gantt-bar-container">
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                    </div>
+                </div>
+
+                <div class="gantt-row">
+                    <div class="gantt-label">Schulung & Change Management</div>
+                    <div class="gantt-bar-container">
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                    </div>
+                </div>
+
+                <div class="gantt-row">
+                    <div class="gantt-label">Rollout stufenweise</div>
+                    <div class="gantt-bar-container">
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                    </div>
+                </div>
+
+                <div class="gantt-row">
+                    <div class="gantt-label">Monitoring & Modell-Updates</div>
+                    <div class="gantt-bar-container">
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month active"></div>
+                    </div>
+                </div>
+
+                <div class="gantt-row">
+                    <div class="gantt-label">Evaluation & Roadmap 2027</div>
+                    <div class="gantt-bar-container">
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month inactive"></div>
+                        <div class="gantt-month active"></div>
+                        <div class="gantt-month active"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="content-card">
+            <p style="text-align: center; padding: 2rem; background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(255, 45, 149, 0.1)); border-radius: 15px; border-left: 4px solid var(--primary);">
+                <strong style="font-size: 1.1rem;">Projektverantwortlicher:</strong> Daniel Löffler, KI-Manager<br>
+                <strong>Kontakt:</strong> <a href="mailto:daniel.loeffler@gmail.com" style="color: var(--primary); text-decoration: none;">daniel.loeffler@gmail.com</a><br>
+                <strong>Erstellt:</strong> Januar 2026 | <strong>Version:</strong> 1.0
+            </p>
+        </div>
+    </div>
+</body>
+</html>
