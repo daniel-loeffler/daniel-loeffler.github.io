@@ -173,14 +173,6 @@
         }
 
         /* Goal Boxes */
-        .goal-box {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(255, 45, 149, 0.1));
-            border-left: 4px solid var(--primary);
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            border-radius: 10px;
-        }
-
         /* Tables */
         table {
             width: 100%;
@@ -256,6 +248,15 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 0.5rem;
+        }
+
+        .kpi-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0.8rem 0;
         }
 
         .kpi-description {
@@ -383,16 +384,27 @@
 
             <h3>Projektziele (SMART)</h3>
             
-            <div class="goal-box">
-                <strong>1. Effizienzsteigerung:</strong> Reduzierung der durchschnittlichen Antwortzeit bei Standard-Anfragen von 24h auf maximal 2h bis Q3 2026
-            </div>
-            
-            <div class="goal-box">
-                <strong>2. Automatisierung:</strong> 40% aller Kundenanfragen werden bis Q4 2026 vollautomatisch durch KI beantwortet, ohne menschliche Intervention
-            </div>
-            
-            <div class="goal-box">
-                <strong>3. Kundenzufriedenheit:</strong> Steigerung des Customer Satisfaction Score (CSAT) von 3,2 auf mindestens 4,0 von 5 Sternen bis Jahresende 2026
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-label">Ziel Q3 2026</div>
+                    <div class="kpi-title">Effizienzsteigerung</div>
+                    <div class="kpi-number">≤ 2h</div>
+                    <div class="kpi-description">Reduzierung der durchschnittlichen Antwortzeit bei Standard-Anfragen von 24h auf maximal 2h</div>
+                </div>
+                
+                <div class="kpi-card">
+                    <div class="kpi-label">Ziel Q4 2026</div>
+                    <div class="kpi-title">Automatisierung</div>
+                    <div class="kpi-number">40%</div>
+                    <div class="kpi-description">Aller Kundenanfragen werden vollautomatisch durch KI beantwortet, ohne menschliche Intervention</div>
+                </div>
+                
+                <div class="kpi-card">
+                    <div class="kpi-label">Ziel Jahresende 2026</div>
+                    <div class="kpi-title">Kundenzufriedenheit</div>
+                    <div class="kpi-number">4,0/5</div>
+                    <div class="kpi-description">Steigerung des Customer Satisfaction Score (CSAT) von 3,2 auf mindestens 4,0 von 5 Sternen</div>
+                </div>
             </div>
 
             <h3>Top 3 Anforderungen</h3>
@@ -1378,10 +1390,4 @@
         <div class="content-card">
             <p style="text-align: center; padding: 2rem; background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(255, 45, 149, 0.1)); border-radius: 15px; border-left: 4px solid var(--primary);">
                 <strong style="font-size: 1.1rem;">Projektverantwortlicher:</strong> Daniel Löffler, KI-Manager<br>
-                <strong>Kontakt:</strong> <a href="mailto:daniel.loeffler@gmail.com" style="color: var(--primary); text-decoration: none;">daniel.loeffler@gmail.com</a><br>
-                <strong>Erstellt:</strong> Januar 2026 | <strong>Version:</strong> 1.0
-            </p>
-        </div>
-    </div>
-</body>
-</html>
+                <strong>Kontakt:</strong> <a href="/cdn-cgi/l/email-protection#2a4e4b44434f460446454f4c4c464f586a4d474b434604494547" style="color: var(--primary); text-decoration: none;"><span class="__cf_email__" data-cfemail="5a3e3b34333f367436353f3c3c363f281a3d373b333674393537">[email&#160;protected]</span></a><br
