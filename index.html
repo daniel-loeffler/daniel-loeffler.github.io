@@ -517,12 +517,17 @@
             50% { transform: scale(1.1); box-shadow: 0 0 50px var(--cyan); }
         }
 
-        .node-1 { top: 0; left: 50%; transform: translateX(-50%); animation-delay: 0s; }
-        .node-2 { top: 15%; right: 10%; animation-delay: 0.5s; }
-        .node-3 { bottom: 15%; right: 10%; animation-delay: 1s; }
-        .node-4 { bottom: 0; left: 50%; transform: translateX(-50%); animation-delay: 1.5s; }
-        .node-5 { bottom: 15%; left: 10%; animation-delay: 2s; }
-        .node-6 { top: 15%; left: 10%; animation-delay: 2.5s; }
+        @keyframes pulse-centered {
+            0%, 100% { transform: translateX(-50%) scale(1); box-shadow: 0 0 30px var(--cyan); }
+            50% { transform: translateX(-50%) scale(1.1); box-shadow: 0 0 50px var(--cyan); }
+        }
+
+        .node-1 { top: 0; left: 50%; animation: pulse-centered 3s ease-in-out infinite; animation-delay: 0s; }
+        .node-2 { top: 15%; right: 10%; animation: pulse 3s ease-in-out infinite; animation-delay: 0.5s; }
+        .node-3 { bottom: 15%; right: 10%; animation: pulse 3s ease-in-out infinite; animation-delay: 1s; }
+        .node-4 { bottom: 0; left: 50%; animation: pulse-centered 3s ease-in-out infinite; animation-delay: 1.5s; }
+        .node-5 { bottom: 15%; left: 10%; animation: pulse 3s ease-in-out infinite; animation-delay: 2s; }
+        .node-6 { top: 15%; left: 10%; animation: pulse 3s ease-in-out infinite; animation-delay: 2.5s; }
 
         .center-node {
             position: absolute;
