@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap Location
+Sitemap: https://daniel-loeffler.github.io/sitemap.xml
+
+# Crawl-Delay (optional, für höfliche Crawler)
+Crawl-delay: 1
