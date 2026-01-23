@@ -604,15 +604,30 @@
             margin-top: 3rem;
         }
 
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
         .stat-card {
             text-align: center;
-            padding: 2rem;
+            padding: 2rem 1rem;
             background: rgba(0, 212, 255, 0.05);
             border: 1px solid rgba(0, 212, 255, 0.2);
             border-radius: 20px;
             transition: all 0.4s;
             position: relative;
             overflow: hidden;
+            min-width: 0;
         }
 
         .stat-card::before {
@@ -638,7 +653,7 @@
         }
 
         .stat-number {
-            font-size: 3.5rem;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
             font-weight: 700;
             background: linear-gradient(135deg, var(--cyan), var(--pink));
             -webkit-background-clip: text;
@@ -646,12 +661,15 @@
             background-clip: text;
             display: block;
             margin-bottom: 0.5rem;
+            word-break: keep-all;
         }
 
         .stat-label {
             color: rgba(255, 255, 255, 0.8);
-            font-size: 1rem;
+            font-size: clamp(0.9rem, 2vw, 1rem);
             font-weight: 500;
+            line-height: 1.4;
+            word-wrap: break-word;
         }
 
         /* Skills Section */
@@ -1042,10 +1060,6 @@
             .contact-grid {
                 grid-template-columns: 1fr;
                 gap: 3rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
             }
 
             .brain-visual {
