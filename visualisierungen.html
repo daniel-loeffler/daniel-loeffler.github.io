@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KI-generierte Business Visualisierungen - Daniel Löffler</title>
+    <meta name="description" content="Portfolio KI-generierter Business Visualisierungen für Controlling, Reporting und Datenanalyse von Daniel Löffler">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00d4ff;
+            --secondary: #ff006e;
+            --accent: #8338ec;
+            --dark: #0a0e27;
+            --dark-blue: #1a1f3a;
+            --navy: #0f1729;
+            --cyan: #00f5ff;
+            --pink: #ff2d95;
+            --purple: #a855f7;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--white);
+            background: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.9);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--cyan) 0%, var(--pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--cyan);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(10, 14, 39, 0.98);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 10rem 2rem 6rem;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-blue) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 45, 149, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--white), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+        }
+
+        .hero-image {
+            max-width: 1000px;
+            margin: 3rem auto 0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 212, 255, 0.3),
+                        0 0 100px rgba(255, 45, 149, 0.2);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Process Section */
+        .process-section {
+            padding: 6rem 2rem;
+            background: var(--dark-blue);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--cyan), var(--pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-title p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .process-card {
+            background: rgba(0, 212, 255, 0.05);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s;
+        }
+
+        .process-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--cyan);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.3);
+        }
+
+        .process-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--cyan), var(--pink));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 1.5rem;
+        }
+
+        .process-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--cyan);
+        }
+
+        .process-card p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            padding: 6rem 2rem;
+            background: var(--dark);
+        }
+
+        .viz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .viz-card {
+            background: rgba(0, 212, 255, 0.05);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s;
+            cursor: pointer;
+        }
+
+        .viz-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--cyan);
+            box-shadow: 0 20px 60px rgba(0, 212, 255, 0.4);
+        }
+
+        .viz-image {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .viz-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.4s;
+        }
+
+        .viz-card:hover .viz-image img {
+            transform: scale(1.05);
+        }
+
+        .viz-content {
+            padding: 2rem;
+        }
+
+        .viz-tag {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid var(--cyan);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--cyan);
+            margin-bottom: 1rem;
+        }
+
+        .viz-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+
+        .viz-content p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        /* Use Cases Section */
+        .use-cases-section {
+            padding: 6rem 2rem;
+            background: var(--dark-blue);
+        }
+
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .use-case-card {
+            background: rgba(168, 85, 247, 0.05);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.4s;
+        }
+
+        .use-case-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--purple);
+            box-shadow: 0 15px 40px rgba(168, 85, 247, 0.3);
+        }
+
+        .use-case-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .use-case-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--purple);
+        }
+
+        .use-case-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .use-case-card li {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .use-case-card li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--purple);
+        }
+
+        /* Disclaimer Section */
+        .disclaimer-section {
+            padding: 4rem 2rem;
+            background: rgba(0, 212, 255, 0.05);
+            border-top: 2px solid rgba(0, 212, 255, 0.2);
+            border-bottom: 2px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .disclaimer-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .disclaimer-content h3 {
+            font-size: 1.5rem;
+            color: var(--cyan);
+            margin-bottom: 1.5rem;
+        }
+
+        .disclaimer-content p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-blue) 100%);
+            text-align: center;
+        }
+
+        .cta-content h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--cyan), var(--pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cta-content p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--cyan), var(--pink));
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.4s;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.5);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--navy);
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            .viz-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 8rem 1.5rem 4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">DL</div>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Menu">☰</button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html#home">Start</a></li>
+                <li><a href="index.html#about">Über mich</a></li>
+                <li><a href="index.html#skills">Kompetenzen</a></li>
+                <li><a href="index.html#projects">Portfolio</a></li>
+                <li><a href="cv.html">Lebenslauf</a></li>
+                <li><a href="insights.html">Insights</a></li>
+                <li><a href="index.html#contact">Kontakt</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>KI-generierte Business Visualisierungen</h1>
+            <p>Moderne, datengetriebene Visualisierungen für Controlling, Reporting und strategische Entscheidungsfindung – erstellt mit KI-Unterstützung und Controller-Expertise</p>
+            
+            <div class="hero-image">
+                <img src="viz_hero.jpg" alt="3D Data Exploration - Interaktive Datenanalyse">
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Mein Prozess</h2>
+                <p>Von der Anforderung zur fertigen Visualisierung</p>
+            </div>
+
+            <div class="process-grid">
+                <div class="process-card">
+                    <div class="process-number">1</div>
+                    <h3>Anforderungsanalyse</h3>
+                    <p>Verstehen der Business-Anforderungen, Zielgruppe und gewünschten Insights</p>
+                </div>
+
+                <div class="process-card">
+                    <div class="process-number">2</div>
+                    <h3>Prompt Engineering</h3>
+                    <p>Entwicklung präziser Prompts für KI-Tools wie DALL-E 3, die gewünschte Metriken und Darstellungsformen berücksichtigen</p>
+                </div>
+
+                <div class="process-card">
+                    <div class="process-number">3</div>
+                    <h3>KI-Generierung</h3>
+                    <p>Erstellung der Basisvisualisierung mit KI-Tools unter Berücksichtigung von Corporate Design und Farbkonzepten</p>
+                </div>
+
+                <div class="process-card">
+                    <div class="process-number">4</div>
+                    <h3>Verfeinerung</h3>
+                    <p>Anpassung, Beschriftung und Integration in Reporting-Systeme oder Präsentationen</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Beispiel-Visualisierungen</h2>
+                <p>Eine Auswahl KI-generierter Business Grafiken</p>
+            </div>
+
+            <div class="viz-grid">
+                <!-- Dashboard -->
+                <div class="viz-card">
+                    <div class="viz-image">
+                        <img src="viz_dashboard.jpg" alt="KI-gestütztes Controlling Dashboard">
+                    </div>
+                    <div class="viz-content">
+                        <span class="viz-tag">Controlling Dashboard</span>
+                        <h3>KI-gestütztes Performance Dashboard</h3>
+                        <p>Übersichtliche Darstellung von KPIs, EBIT-Trends und Kostenstrukturen für das operative Controlling. Zeigt Umsatz, EBIT, ROI und Forecast-Metriken auf einen Blick.</p>
+                    </div>
+                </div>
+
+                <!-- Predictive Analytics -->
+                <div class="viz-card">
+                    <div class="viz-image">
+                        <img src="viz_predictive.jpg" alt="Predictive Analytics Visualisierung">
+                    </div>
+                    <div class="viz-content">
+                        <span class="viz-tag">Predictive Analytics</span>
+                        <h3>KI-Prognose & Forecasting</h3>
+                        <p>Visualisierung prädiktiver Analysen mit Trendkurven, Konfidenzintervallen und KI-gestützten Vorhersagen für strategische Planung.</p>
+                    </div>
+                </div>
+
+                <!-- Report Template -->
+                <div class="viz-card">
+                    <div class="viz-image">
+                        <img src="viz_report.jpg" alt="Finanzbericht Template">
+                    </div>
+                    <div class="viz-content">
+                        <span class="viz-tag">Report Template</span>
+                        <h3>Executive Financial Report</h3>
+                        <p>Professionelles Template für Finanzberichte mit Executive Summary, KPI-Cards und detaillierten Analysen für Management-Präsentationen.</p>
+                    </div>
+                </div>
+
+                <!-- Cost Flow -->
+                <div class="viz-card">
+                    <div class="viz-image">
+                        <img src="viz_costflow.jpg" alt="Kostenstruktur Analyse">
+                    </div>
+                    <div class="viz-content">
+                        <span class="viz-tag">Cost Analysis</span>
+                        <h3>Kostenfluss-Visualisierung</h3>
+                        <p>Sankey-Diagramm zur Darstellung der Budgetverteilung und Kostenströme. Zeigt prozentuale Aufteilung auf Personalkosten, IT-Infrastruktur und operative Kosten.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="use-cases-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Anwendungsbereiche</h2>
+                <p>Wo KI-generierte Visualisierungen Mehrwert schaffen</p>
+            </div>
+
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <div class="use-case-icon">📊</div>
+                    <h3>Management Reporting</h3>
+                    <ul>
+                        <li>Executive Dashboards</li>
+                        <li>Quartalsberichte</li>
+                        <li>KPI-Übersichten</li>
+                        <li>Trend-Analysen</li>
+                    </ul>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">💼</div>
+                    <h3>Controlling</h3>
+                    <ul>
+                        <li>Budget-Planung</li>
+                        <li>Abweichungsanalysen</li>
+                        <li>Kostenstruktur-Darstellung</li>
+                        <li>Performance-Monitoring</li>
+                    </ul>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">📈</div>
+                    <h3>Strategische Planung</h3>
+                    <ul>
+                        <li>Forecasting</li>
+                        <li>Szenario-Analysen</li>
+                        <li>Marktentwicklungen</li>
+                        <li>Business Cases</li>
+                    </ul>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🎯</div>
+                    <h3>Präsentationen</h3>
+                    <ul>
+                        <li>Investor Relations</li>
+                        <li>Board Meetings</li>
+                        <li>Stakeholder Reports</li>
+                        <li>Projekt-Updates</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Disclaimer Section -->
+    <section class="disclaimer-section">
+        <div class="disclaimer-content">
+            <h3>💡 Hinweis zu Design & Stil</h3>
+            <p>Die hier gezeigten Visualisierungen sind <strong>Beispiele im Stil dieser Website</strong> und nutzen bewusst auffällige Farben (Cyan, Pink, Purple) sowie moderne Neon-Effekte zur Demonstration der technischen Möglichkeiten.</p>
+            <p style="margin-top: 1rem;"><strong>Für professionelle Business-Präsentationen</strong> im Unternehmensumfeld würden selbstverständlich <strong>schlichtere Grafiken mit Corporate-Design-Farben</strong> (z.B. dezentes Blau, Grau, Weiß) und klassische Chart-Typen verwendet – angepasst an Ihre CI/CD-Richtlinien und Zielgruppe.</p>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Interesse an eigenen Visualisierungen?</h2>
+            <p>Lassen Sie uns besprechen, wie KI-gestützte Visualisierungen Ihr Reporting und Controlling unterstützen können</p>
+            <a href="index.html#contact" class="btn">Jetzt Kontakt aufnehmen</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Daniel Löffler · Controller · KI-Manager · Alle Rechte vorbehalten</p>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const navLinks = document.getElementById('nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenuBtn.contains(e.target) && !navLinks.contains(e.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
